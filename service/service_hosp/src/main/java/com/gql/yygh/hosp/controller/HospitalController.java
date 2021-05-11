@@ -1,8 +1,10 @@
 package com.gql.yygh.hosp.controller;
 
 import com.gql.yygh.common.result.Result;
+import com.gql.yygh.hosp.service.DepartmentService;
 import com.gql.yygh.hosp.service.HospitalService;
 import com.gql.yygh.model.hosp.Hospital;
+import com.gql.yygh.vo.hosp.DepartmentVo;
 import com.gql.yygh.vo.hosp.HospitalQueryVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ import java.util.Map;
 public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @ApiOperation(value = "医院详情信息")
     @GetMapping("showHospDetail/{id}")
@@ -54,5 +59,12 @@ public class HospitalController {
         List<Hospital> content = pageModel.getContent();
         long totalElements = pageModel.getTotalElements();
         return Result.ok(pageModel);
+    }
+
+    @ApiOperation(value = "根据医院编号获取科室")
+    @GetMapping("department/{hoscode}")
+    public Result index(@PathVariable String hoscode) {
+        List<DepartmentVo> list = departmentService.findDeptTree(hoscode);
+        return Result.ok(list);
     }
 }
