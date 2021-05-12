@@ -1,8 +1,11 @@
 package com.gql.yygh.hosp.controller.api;
 
 import com.gql.yygh.common.result.Result;
+import com.gql.yygh.hosp.service.DepartmentService;
 import com.gql.yygh.hosp.service.HospitalService;
+import com.gql.yygh.model.hosp.Department;
 import com.gql.yygh.model.hosp.Hospital;
+import com.gql.yygh.vo.hosp.DepartmentVo;
 import com.gql.yygh.vo.hosp.HospitalQueryVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 前台医院API接口
@@ -23,6 +27,9 @@ import java.util.List;
 public class HospApiController {
     @Autowired
     private HospitalService hospitalService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @ApiOperation(value = "查询医院列表")
     @GetMapping("findHospList/{page}/{limit}")
@@ -38,9 +45,22 @@ public class HospApiController {
 
     @ApiOperation(value = "根据医院名称查询")
     @GetMapping("findByHosName/{hosname}")
-    public Result findByHosName(@PathVariable String hosname){
+    public Result findByHosName(@PathVariable String hosname) {
         List<Hospital> list = hospitalService.findByHosname(hosname);
         return Result.ok(list);
     }
 
+    @ApiOperation(value = "根据医院编号获取科室")
+    @GetMapping("department/{hoscode}")
+    public Result index(@PathVariable String hoscode) {
+        List<DepartmentVo> list = departmentService.findDeptTree(hoscode);
+        return Result.ok(list);
+    }
+
+    @ApiOperation(value = "根据医院编号获取医院预约挂号详情")
+    @GetMapping("findHospDetail/{hoscode}")
+    public Result item(@PathVariable String hoscode) {
+        Map<String, Object> map = hospitalService.item(hoscode);
+        return Result.ok(map);
+    }
 }

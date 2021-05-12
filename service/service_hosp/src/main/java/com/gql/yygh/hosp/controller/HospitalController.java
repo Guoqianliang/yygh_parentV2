@@ -25,9 +25,6 @@ public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
 
-    @Autowired
-    private DepartmentService departmentService;
-
     @ApiOperation(value = "医院详情信息")
     @GetMapping("showHospDetail/{id}")
     public Result showHospDetail(@PathVariable String id) {
@@ -59,12 +56,5 @@ public class HospitalController {
         List<Hospital> content = pageModel.getContent();
         long totalElements = pageModel.getTotalElements();
         return Result.ok(pageModel);
-    }
-
-    @ApiOperation(value = "根据医院编号获取科室")
-    @GetMapping("department/{hoscode}")
-    public Result index(@PathVariable String hoscode) {
-        List<DepartmentVo> list = departmentService.findDeptTree(hoscode);
-        return Result.ok(list);
     }
 }
