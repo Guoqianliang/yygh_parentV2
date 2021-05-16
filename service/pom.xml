@@ -15,8 +15,8 @@
         <module>service_user</module>
         <module>service_hosp</module>
         <module>service_cmn</module>
+        <module>service_msm</module>
     </modules>
-
     <dependencies>
         <dependency>
             <groupId>com.gql</groupId>
@@ -26,15 +26,17 @@
 
         <dependency>
             <groupId>com.gql</groupId>
-            <artifactId>common_util</artifactId>
+            <artifactId>service_util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.gql</groupId>
-            <artifactId>service_util</artifactId>
+            <artifactId>common_util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+
 
         <!--web-->
         <dependency>
