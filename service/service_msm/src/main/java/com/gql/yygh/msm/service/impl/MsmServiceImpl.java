@@ -30,7 +30,10 @@ public class MsmServiceImpl implements MsmService {
         if (StringUtils.isEmpty(phone)) {
             return false;
         }
+
         // 整合阿里云短信服务
+
+
         // 设置相关参数
         DefaultProfile profile = DefaultProfile.
                 getProfile(ConstantPropertiesUtils.REGION_Id,
@@ -49,9 +52,9 @@ public class MsmServiceImpl implements MsmService {
         //手机号
         request.putQueryParameter("PhoneNumbers", phone);
         //签名名称
-        request.putQueryParameter("SignName", "这里填入签名名称");
+        request.putQueryParameter("SignName", "袋鼠佳日");
         //模板code
-        request.putQueryParameter("TemplateCode", "SMS_210078373");
+        request.putQueryParameter("TemplateCode", "SMS_215315088");
         //验证码  使用json格式   {"code":"123456"}
         Map<String, Object> param = new HashMap();
         param.put("code", code);

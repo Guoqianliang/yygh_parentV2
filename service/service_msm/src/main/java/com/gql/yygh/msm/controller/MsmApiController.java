@@ -39,8 +39,11 @@ public class MsmApiController {
         }
         // 如果获取不到,生成6位验证码
         code = RandomUtil.getSixBitRandom();
+        // 偷偷打印到控制台
+        System.out.println(code);
         // 调用service返回,通过整合短信服务进行发送
         boolean isSend = msmService.send(phone, code);
+
         // 将生成的验证码放入redis中,并设置有效时间
         if (isSend) {
             // 验证码超过1分钟失效
