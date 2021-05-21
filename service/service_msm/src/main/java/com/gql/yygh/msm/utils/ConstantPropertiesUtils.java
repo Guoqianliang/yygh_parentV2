@@ -21,7 +21,7 @@ public class ConstantPropertiesUtils implements InitializingBean {
 
     @Value("${aliyun.sms.secret}")
     private String secret;
-    
+
     public static String REGION_Id;
     public static String ACCESS_KEY_ID;
     public static String SECRECT;
@@ -32,5 +32,4 @@ public class ConstantPropertiesUtils implements InitializingBean {
         ACCESS_KEY_ID = accessKeyId;
         SECRECT = secret;
     }
-
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gql.yygh.common.exception.YyghException;
 import com.gql.yygh.common.helper.JwtHelper;
 import com.gql.yygh.common.result.ResultCodeEnum;
+import com.gql.yygh.model.acl.User;
 import com.gql.yygh.model.user.UserInfo;
 import com.gql.yygh.user.mapper.UserInfoMapper;
 import com.gql.yygh.user.service.UserInfoService;
@@ -46,21 +47,36 @@ public class UserInfoServiceImpl extends
             throw new YyghException(ResultCodeEnum.CODE_ERROR);
         }
 
-
-        // 判断是否是第一次登录:根据手机号查询数据库
-        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("phone", phone);
-        UserInfo userInfo = baseMapper.selectOne(wrapper);
-
-        // 如果是第一次使用手机登录
-        if (userInfo == null) {
-            // 添加信息到数据库
-            userInfo = new UserInfo();
-            userInfo.setName("");
-            userInfo.setPhone(phone);
-            userInfo.setStatus(1);
-            baseMapper.insert(userInfo);
+        //绑定手机号码
+        UserInfo userInfo = null;
+        if (!StringUtils.isEmpty(loginVo.getOpenid())) {
+            userInfo = this.selectWxInfoOpenId(loginVo.getOpenid());
+            if (null != userInfo) {
+                userInfo.setPhone(loginVo.getPhone());
+                this.updateById(userInfo);
+            } else {
+                throw new YyghException(ResultCodeEnum.DATA_ERROR);
+            }
         }
+
+        // 如果userInfo为空,进行正常的手机登录
+        if (null == userInfo) {
+            // 判断是否是第一次登录:根据手机号查询数据库
+            QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+            wrapper.eq("phone", phone);
+            userInfo = baseMapper.selectOne(wrapper);
+
+            // 如果是第一次使用手机登录
+            if (userInfo == null) {
+                // 添加信息到数据库
+                userInfo = new UserInfo();
+                userInfo.setName("");
+                userInfo.setPhone(phone);
+                userInfo.setStatus(1);
+                baseMapper.insert(userInfo);
+            }
+        }
+
 
         // 校验是否被禁用
         if (userInfo.getStatus() == 0) {
@@ -68,14 +84,8 @@ public class UserInfoServiceImpl extends
         }
 
         // 不是第一次,就直接登录
-
-
         // 返回登录信息
-
-
         // 返回登录用户名
-
-
         // 返回tocken信息
         HashMap<String, Object> map = new HashMap<>();
         String name = userInfo.getName();
@@ -93,6 +103,15 @@ public class UserInfoServiceImpl extends
         String token = JwtHelper.createToken(userInfo.getId(), name);
         map.put("tocken", token);
         return map;
+    }
+
+    // 判断数据库是否存在微信的扫描人信息
+    @Override
+    public UserInfo selectWxInfoOpenId(String openid) {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid", openid);
+        UserInfo userInfo = baseMapper.selectOne(queryWrapper);
+        return userInfo;
     }
 }
 

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 // 取消数据源自动配置,因为发送短信不需要调用数据库
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
-// swagger
+// swagger扫描
 @ComponentScan(basePackages = {"com.gql"})
 public class ServiceMsmApplication {
     public static void main(String[] args) {

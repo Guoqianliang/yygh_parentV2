@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @Description:
+ * @Description: 生成验证码类
  * @author Guoqianliang
  */
 public class RandomUtil {
