@@ -13,6 +13,7 @@ import java.util.Map;
 public interface UserInfoService extends IService<UserInfo> {
     // 用户手机号登录接口
     Map<String, Object> loginUser(LoginVo loginVo);
+
     // 判断数据库是否存在微信的扫描人信息
     UserInfo selectWxInfoOpenId(String openid);
 }

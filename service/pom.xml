@@ -16,6 +16,7 @@
         <module>service_hosp</module>
         <module>service_cmn</module>
         <module>service_msm</module>
+        <module>service_oss</module>
     </modules>
     <dependencies>
         <dependency>
@@ -30,11 +31,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.gql</groupId>
-            <artifactId>common_util</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.gql</groupId>-->
+<!--            <artifactId>common_util</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
 
 

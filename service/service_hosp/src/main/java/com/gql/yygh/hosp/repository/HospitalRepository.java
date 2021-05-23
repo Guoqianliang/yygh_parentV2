@@ -12,7 +12,7 @@ import java.util.List;
  * @date 17:03 - 2021/4/18
  */
 @Repository
-public interface HospitalRepository extends MongoRepository<Hospital,String> {
+public interface HospitalRepository extends MongoRepository<Hospital, String> {
     /**
      * 根据HosCode获得记录
      * @param hoscode

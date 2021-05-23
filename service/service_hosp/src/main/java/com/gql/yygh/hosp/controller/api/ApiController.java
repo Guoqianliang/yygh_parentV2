@@ -45,11 +45,12 @@ public class ApiController {
 
     @Autowired
     private ScheduleService scheduleService;
+
     /**
      * 删除排班
      */
     @PostMapping("schedule/remove")
-    public Result removeSchedule(HttpServletRequest request){
+    public Result removeSchedule(HttpServletRequest request) {
         Map<String, String[]> requestMap = request.getParameterMap();
         Map<String, Object> paramMap = HttpRequestHelper.switchMap(requestMap);
         // 获取医院编号和排班编号
