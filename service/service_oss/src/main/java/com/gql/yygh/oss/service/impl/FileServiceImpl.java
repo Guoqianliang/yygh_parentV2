@@ -4,12 +4,14 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.gql.yygh.oss.service.FileService;
 import com.gql.yygh.oss.utils.ConstantOssPropertiesUtils;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 /**
  * @Description:
@@ -33,6 +35,14 @@ public class FileServiceImpl implements FileService {
             // 上传流文件
             InputStream inputStream = file.getInputStream();
             String fileName = file.getOriginalFilename();
+            // 生成随机唯一值,使用uuid,添加到文件名称中
+            String uuid = UUID.randomUUID().toString().replace("-", "");
+            // uuid01.jpg
+            fileName = uuid + fileName;
+            // 按照当前日期,创建文件夹,上传到创建文件夹里面
+            String timeUrl = new DateTime().toString("yyyy/MM/dd");
+            fileName = timeUrl + "/" + fileName;
+
             // 调用方法实现上传
             ossClient.putObject(bucketName, fileName, inputStream);
             // 关闭OSSClient。
