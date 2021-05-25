@@ -1,4 +1,4 @@
-package com.gql.yygh.common.util;
+package com.gql.yygh.common.utils;
 
 
 import org.apache.commons.codec.binary.Base64;
