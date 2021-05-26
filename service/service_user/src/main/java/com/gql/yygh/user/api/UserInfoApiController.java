@@ -1,4 +1,4 @@
-package com.gql.yygh.user.controller;
+package com.gql.yygh.user.api;
 
 import com.gql.yygh.common.result.Result;
 import com.gql.yygh.common.utils.AuthContextHolder;

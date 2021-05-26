@@ -16,6 +16,7 @@ public class AuthContextHolder {
         String token = request.getHeader("token");
         // 使用jwt从token中获取userid
         Long userId = JwtHelper.getUserId(token);
+        System.out.println("userId:"+userId);
         return userId;
     }
 
