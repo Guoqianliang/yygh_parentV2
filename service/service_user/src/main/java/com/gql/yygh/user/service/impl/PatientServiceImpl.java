@@ -39,6 +39,14 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
         return patientList;
     }
 
+    // 根据id获取就诊人信息
+    @Override
+    public Patient getPatientId(Long id) {
+        Patient patient = baseMapper.selectById(id);
+        this.packPatient(patient);
+        return patient;
+    }
+
     // 其他参数的封装
     private void packPatient(Patient patient) {
         // 根据证件类型编码获取证件具体值
