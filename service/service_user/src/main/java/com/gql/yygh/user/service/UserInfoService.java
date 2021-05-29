@@ -28,4 +28,6 @@ public interface UserInfoService extends IService<UserInfo> {
     void lock(Long userId, Integer status);
     // 用户详情
     Map<String, Object> show(Long userId);
+    // 认证审批
+    void approval(Long userId, Integer authStatus);
 }

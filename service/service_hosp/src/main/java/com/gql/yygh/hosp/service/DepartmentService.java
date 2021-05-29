@@ -47,4 +47,12 @@ public interface DepartmentService {
      * @return
      */
     String getDepName(String hoscode, String depcode);
+
+    /**
+     * 根据医院编号、科室编号 获取科室对象
+     * @param hoscode
+     * @param depcode
+     * @return
+     */
+    Department getDepartment(String hoscode, String depcode);
 }

@@ -149,6 +149,13 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return null;
     }
+
+    // 根据医院编号、科室编号 获取科室对象
+    @Override
+    public Department getDepartment(String hoscode, String depcode) {
+
+        return departmentRepository.getDepartmentByHoscodeAndDepcode(hoscode, depcode);
+    }
 }
 
 
