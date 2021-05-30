@@ -39,6 +39,7 @@ public class JwtHelper {
         return userId.longValue();
     }
 
+
     // 根据token字符串得到用户的名称
     public static String getUserName(String token) {
         if (StringUtils.isEmpty(token)) {
@@ -50,12 +51,13 @@ public class JwtHelper {
         return (String) claims.get("userName");
     }
 
+
     // 测试
     public static void main(String[] args) {
-        String token = JwtHelper.createToken(1L, "Hudie");
-        // token = 头信息+主体+签名哈希
+        String token = JwtHelper.createToken(1L, "lucy");
         System.out.println(token);
         System.out.println(JwtHelper.getUserId(token));
         System.out.println(JwtHelper.getUserName(token));
     }
+
 }

@@ -114,7 +114,8 @@ public class WeixinApiController {
 
             return "redirect:" +
                     ConstantWxPropertiesUtils.YYGH_BASE_URL + "/weixin/callback?token=" + map.get("token") + "&openid="
-                    + map.get("openid") + "&name=" + URLEncoder.encode((String) map.get("name"), "utf-8");
+                    + map.get("openid") + "&name=" + URLEncoder.encode((String) map.get("name"), "UTF-8");
+            // , "utf-8"
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

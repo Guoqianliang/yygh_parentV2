@@ -86,4 +86,5 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
         return null;
     }
+
 }

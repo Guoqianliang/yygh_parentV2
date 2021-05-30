@@ -286,6 +286,15 @@ public class ScheduleServiceImpl implements ScheduleService {
         return result;
     }
 
+    // 根据排班id获取排班数据
+    @Override
+    public Schedule getScheduleId(String scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).get();
+        // 封装排班详情的其他值
+        this.packSchedule(schedule);
+        return schedule;
+    }
+
     /**
      * 获取可预约日期分页数据
      */
@@ -345,6 +354,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.getParam().put("depname", departmentService.getDepName(schedule.getHoscode(), schedule.getDepcode()));
         // 设置日期对应星期
         schedule.getParam().put("dayOfWeek", this.getDayOfWeek(new DateTime(schedule.getWorkDate())));
+
     }
 
     /**

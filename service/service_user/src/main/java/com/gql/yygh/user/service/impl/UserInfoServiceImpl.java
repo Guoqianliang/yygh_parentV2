@@ -67,15 +67,13 @@ public class UserInfoServiceImpl extends
         }
 
         // 如果userInfo为空,进行正常的手机登录
-        if (null == userInfo) {
-            // 判断是否是第一次登录:根据手机号查询数据库
+        if (userInfo == null) {
+            //判断是否第一次登录：根据手机号查询数据库，如果不存在相同手机号就是第一次登录
             QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
             wrapper.eq("phone", phone);
             userInfo = baseMapper.selectOne(wrapper);
-
-            // 如果是第一次使用手机登录
-            if (userInfo == null) {
-                // 添加信息到数据库
+            if (userInfo == null) { //第一次使用这个手机号登录
+                //添加信息到数据库
                 userInfo = new UserInfo();
                 userInfo.setName("");
                 userInfo.setPhone(phone);
@@ -93,22 +91,20 @@ public class UserInfoServiceImpl extends
         // 不是第一次,就直接登录
         // 返回登录信息
         // 返回登录用户名
-        // 返回tocken信息
-        HashMap<String, Object> map = new HashMap<>();
+        // 返回token信息
+        Map<String, Object> map = new HashMap<>();
         String name = userInfo.getName();
-        // 如果用户名称为空，就去得到昵称
         if (StringUtils.isEmpty(name)) {
             name = userInfo.getNickName();
         }
-        // 如果昵称还为空，就去得到手机号
         if (StringUtils.isEmpty(name)) {
             name = userInfo.getPhone();
         }
         map.put("name", name);
 
-        // 使用JWT生成tocken字符串
+        //jwt生成token字符串
         String token = JwtHelper.createToken(userInfo.getId(), name);
-        map.put("tocken", token);
+        map.put("token", token);
         return map;
     }
 
