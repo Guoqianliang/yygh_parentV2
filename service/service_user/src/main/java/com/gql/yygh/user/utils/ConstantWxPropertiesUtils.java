@@ -27,7 +27,6 @@ public class ConstantWxPropertiesUtils implements InitializingBean {
     public static String WX_OPEN_APP_ID;
     public static String WX_OPEN_APP_SECRET;
     public static String WX_OPEN_REDIRECT_URL;
-
     public static String YYGH_BASE_URL;
 
     @Override

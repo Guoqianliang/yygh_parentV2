@@ -66,7 +66,6 @@ public class WeixinApiController {
             UserInfo userInfo = userInfoService.selectWxInfoOpenId(openid);
             // 如果数据库中不存在微信的扫描人信息
             if (null == userInfo) {
-
                 // 3: 用access_token、openid请求微信地址,得到扫描人信息
                 String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" + "?access_token=%s" + "&openid=%s";
                 String userInfoUrl = String.format(baseUserInfoUrl, access_token, openid);
@@ -76,7 +75,6 @@ public class WeixinApiController {
                 // 获取用户的昵称和头像
                 String nickname = resultUserInfoJson.getString("nickname");
                 String headimgurl = resultUserInfoJson.getString("headimgurl");
-
                 // 4：将获取到的用户昵称添加到数据库中
                 userInfo = new UserInfo();
                 // 用户昵称
@@ -110,11 +108,9 @@ public class WeixinApiController {
             String token = JwtHelper.createToken(userInfo.getId(), name);
             map.put("token", token);
             // 跳转到前端页面中
-
-
             return "redirect:" +
                     ConstantWxPropertiesUtils.YYGH_BASE_URL + "/weixin/callback?token=" + map.get("token") + "&openid="
-                    + map.get("openid") + "&name=" + URLEncoder.encode((String) map.get("name"), "UTF-8");
+                    + map.get("openid") + "&name=" + URLEncoder.encode(map.get("name"), "UTF-8");
             // , "utf-8"
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -132,17 +128,14 @@ public class WeixinApiController {
             Map<String, Object> map = new HashMap<>();
             // 应用唯一标识
             map.put("appid", ConstantWxPropertiesUtils.WX_OPEN_APP_ID);
-
-            // 重定向地址,需要进行Url编码
-            String redirectUri = null;
-            redirectUri = URLEncoder.encode(ConstantWxPropertiesUtils.WX_OPEN_REDIRECT_URL, "UTF-8");
-            map.put("redirectUri", redirectUri);
-
             // 应用授权作用域,网页应用填写snsapi_login即可
             map.put("scope", "snsapi_login");
+
+            // 重定向地址,需要进行Url编码
+            String wxOpenRedirectUrl = URLEncoder.encode(ConstantWxPropertiesUtils.WX_OPEN_REDIRECT_URL, "utf-8");
+            map.put("redirect_uri", wxOpenRedirectUrl);
             // 当前时间
             map.put("state", System.currentTimeMillis() + "");
-
             return Result.ok(map);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

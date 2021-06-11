@@ -1,6 +1,7 @@
 package com.gql.yygh.hosp.service;
 
 import com.gql.yygh.model.hosp.Schedule;
+import com.gql.yygh.vo.hosp.ScheduleOrderVo;
 import com.gql.yygh.vo.hosp.ScheduleQueryVo;
 import org.springframework.data.domain.Page;
 
@@ -55,5 +56,9 @@ public interface ScheduleService {
 
     // 根据排班id获取排班数据
     Schedule getScheduleId(String scheduleId);
+    // 根据排班id获取预约下单数据
+    ScheduleOrderVo getScheduleOrderVo(String scheduleId);
 
+    // 更新排班数据
+    void update(Schedule schedule);
 }
