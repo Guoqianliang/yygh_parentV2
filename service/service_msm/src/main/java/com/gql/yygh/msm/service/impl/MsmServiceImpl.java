@@ -84,6 +84,7 @@ public class MsmServiceImpl implements MsmService {
         return false;
     }
 
+    // 用于mq发送短信
     private boolean send(String phone, Map<String, Object> param) {
         // 判断手机号是否为空
         if (StringUtils.isEmpty(phone)) {
@@ -91,8 +92,6 @@ public class MsmServiceImpl implements MsmService {
         }
 
         // 整合阿里云短信服务
-
-
         // 设置相关参数
         DefaultProfile profile = DefaultProfile.
                 getProfile(ConstantPropertiesUtils.REGION_Id,

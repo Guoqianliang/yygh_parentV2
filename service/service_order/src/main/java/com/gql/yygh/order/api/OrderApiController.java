@@ -1,13 +1,22 @@
 package com.gql.yygh.order.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gql.yygh.common.result.Result;
+import com.gql.yygh.common.utils.AuthContextHolder;
+import com.gql.yygh.enums.OrderStatusEnum;
 import com.gql.yygh.model.order.OrderInfo;
+import com.gql.yygh.model.user.UserInfo;
 import com.gql.yygh.order.service.OrderService;
+import com.gql.yygh.vo.order.OrderQueryVo;
+import com.gql.yygh.vo.user.UserInfoQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description:
@@ -21,14 +30,11 @@ public class OrderApiController {
     @Autowired
     private OrderService orderService;
 
-    @ApiOperation(value = "创建订单")
+    @ApiOperation(value = "生成挂号订单")
     @PostMapping("auth/submitOrder/{scheduleId}/{patientId}")
-    public Result saveOrder(
-            @ApiParam(name = "scheduleId", value = "排班id", required = true)
-            @PathVariable String scheduleId,
-            @ApiParam(name = "patientId", value = "就诊人id", required = true)
-            @PathVariable Long patientId) {
-        Long orderId = orderService.saveOrder(scheduleId, patientId);
+    public Result savaOrders(@PathVariable String scheduleId,
+                             @PathVariable Long patientId) {
+        Long orderId = orderService.saveOrder(scheduleId,patientId);
         return Result.ok(orderId);
     }
 
@@ -37,6 +43,23 @@ public class OrderApiController {
     public Result getOrders(@PathVariable String orderId) {
         OrderInfo orderInfo = orderService.getOrder(orderId);
         return Result.ok(orderInfo);
+    }
+
+    // 订单列表接口(条件分页带查询)
+    @GetMapping("auth/{page}/{limit}")
+    public Result list(@PathVariable Long page, @PathVariable Long limit, OrderQueryVo orderQueryVo, HttpServletRequest request) {
+        // 设置当前用户id值
+        orderQueryVo.setUserId(AuthContextHolder.getUserId(request));
+        Page<OrderInfo> pageParam = new Page<>(page, limit);
+        IPage<OrderInfo> pageModel = orderService.selectPage(pageParam, orderQueryVo);
+        return Result.ok(pageModel);
+    }
+
+    //
+    @ApiOperation(value = "获取订单状态")
+    @GetMapping("auth/getStatusList")
+    public Result getStatusList() {
+        return Result.ok(OrderStatusEnum.getStatusList());
     }
 
 }

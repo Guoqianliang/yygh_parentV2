@@ -116,7 +116,6 @@ public class HospApiController {
     @ApiOperation(value = "根据排班id获取预约下单数据")
     @GetMapping("inner/getScheduleOrderVo/{scheduleId}")
     public ScheduleOrderVo getScheduleOrderVo(
-            @ApiParam(name = "scheduleId", value = "排班id", required = true)
             @PathVariable("scheduleId") String scheduleId) {
         return scheduleService.getScheduleOrderVo(scheduleId);
     }
@@ -124,7 +123,6 @@ public class HospApiController {
     @ApiOperation(value = "获取医院签名信息")
     @GetMapping("inner/getSignInfoVo/{hoscode}")
     public SignInfoVo getSignInfoVo(
-            @ApiParam(name = "hoscode", value = "医院code", required = true)
             @PathVariable("hoscode") String hoscode) {
         return hospitalSetService.getSignInfoVo(hoscode);
     }

@@ -109,13 +109,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     @Override
     public String getDictName(String dictCode, String value) {
         // 如果dictCode为空,直接根据value查询;否则根据dictCode和value查询
-        if (StringUtils.isEmpty(dictCode)) {
+
+        if(StringUtils.isEmpty(dictCode)) {
+            // 直接根据value查询
             QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-            wrapper.eq("value", value);
+            wrapper.eq("value",value);
             Dict dict = baseMapper.selectOne(wrapper);
             return dict.getName();
         } else {
-            // 根据dictcode查询dict对象,得到dict的id值
+            // 根据dictcode查询dict对象，得到dict的id值
             Dict codeDict = this.getDictByDictCode(dictCode);
             Long parent_id = codeDict.getId();
             // 根据parent_id和value进行查询

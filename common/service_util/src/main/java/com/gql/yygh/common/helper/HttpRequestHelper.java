@@ -24,7 +24,7 @@ public class HttpRequestHelper {
     }
 
     /**
-     * 将Map集合中的数组类型变为Object类型
+     *
      * @param paramMap
      * @return
      */

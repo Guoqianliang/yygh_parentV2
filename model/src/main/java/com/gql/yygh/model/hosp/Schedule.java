@@ -58,7 +58,7 @@ public class Schedule extends BaseMongoEntity {
     private Integer status;
 
     @ApiModelProperty(value = "排班编号（医院自己的排班主键）")
-    @Indexed //普通索引
+    @Indexed
     private String hosScheduleId;
 
 }

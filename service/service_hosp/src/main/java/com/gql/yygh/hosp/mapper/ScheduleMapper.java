@@ -7,5 +7,6 @@ import com.gql.yygh.model.hosp.Schedule;
  * @Description:
  * @author Guoqianliang
  */
+
 public interface ScheduleMapper extends BaseMapper<Schedule> {
 }

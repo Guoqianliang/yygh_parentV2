@@ -37,10 +37,19 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
         QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
         wrapper.eq("hoscode", hoscode);
         HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
+
+        System.out.println("医院信息:" + hospitalSet);
+
         if (null == hospitalSet) {
+            System.out.println("HospiatlSetServiceImpl类出现错误!");
             throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
         }
         SignInfoVo signInfoVo = new SignInfoVo();
+
+        // 打印测试
+        System.out.println("医院API" + hospitalSet.getApiUrl());
+        System.out.println("医院签名" + hospitalSet.getSignKey());
+
         signInfoVo.setApiUrl(hospitalSet.getApiUrl());
         signInfoVo.setSignKey(hospitalSet.getSignKey());
         return signInfoVo;

@@ -38,11 +38,11 @@ public class HospitalReceiver {
 
     public void receiver(OrderMqVo orderMqVo, Message message, Channel channel) throws IOException {
         if (null != orderMqVo.getAvailableNumber()) {
-            //下单成功更新预约数
-            Schedule schedule = scheduleService.getScheduleId(orderMqVo.getScheduleId());
-            schedule.setReservedNumber(orderMqVo.getReservedNumber());
-            schedule.setAvailableNumber(orderMqVo.getAvailableNumber());
-            scheduleService.update(schedule);
+        // 下单成功更新预约数
+        Schedule schedule = scheduleService.getScheduleId(orderMqVo.getScheduleId());
+        schedule.setReservedNumber(orderMqVo.getReservedNumber());
+        schedule.setAvailableNumber(orderMqVo.getAvailableNumber());
+        scheduleService.update(schedule);
         } else {
             // 取消预约更新预约数
             Schedule schedule = scheduleService.getScheduleId(orderMqVo.getScheduleId());

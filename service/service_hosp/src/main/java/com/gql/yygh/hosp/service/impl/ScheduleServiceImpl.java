@@ -304,22 +304,23 @@ public class ScheduleServiceImpl extends
         ScheduleOrderVo scheduleOrderVo = new ScheduleOrderVo();
 
         // 获取排班信息
-        Schedule schedule = baseMapper.selectById(scheduleId);
+        Schedule schedule = this.getScheduleId(scheduleId);
+
         if (null == schedule) {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);
         }
-
-        //获取预约规则信息
+        // 获取医院信息
         Hospital hospital = hospitalService.getByHoscode(schedule.getHoscode());
-        if (null == hospital) {
-            throw new YyghException(ResultCodeEnum.DATA_ERROR);
-        }
 
+        if (null == hospital) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        //获取预约规则信息
         BookingRule bookingRule = hospital.getBookingRule();
+
         if (null == bookingRule) {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);
         }
-
         // 把获取到的数据设置到scheduleOrderVo中
         scheduleOrderVo.setHoscode(schedule.getHoscode());
         scheduleOrderVo.setHosname(hospitalService.getHospName(schedule.getHoscode()));
@@ -337,17 +338,16 @@ public class ScheduleServiceImpl extends
         DateTime quitTime = this.getDateTime(new DateTime(schedule.getWorkDate()).plusDays(quitDay).toDate(), bookingRule.getQuitTime());
         scheduleOrderVo.setQuitTime(quitTime.toDate());
 
-        //预约开始时间
+        // 预约开始时间
         DateTime startTime = this.getDateTime(new Date(), bookingRule.getReleaseTime());
         scheduleOrderVo.setStartTime(startTime.toDate());
 
-        //预约截止时间
+        // 预约截止时间
         DateTime endTime = this.getDateTime(new DateTime().plusDays(bookingRule.getCycle()).toDate(), bookingRule.getStopTime());
         scheduleOrderVo.setEndTime(endTime.toDate());
 
-        //当天停止挂号时间
+        // 当天停止挂号时间
         DateTime stopTime = this.getDateTime(new Date(), bookingRule.getStopTime());
-        scheduleOrderVo.setStartTime(startTime.toDate());
         scheduleOrderVo.setStopTime(stopTime.toDate());
 
         return scheduleOrderVo;

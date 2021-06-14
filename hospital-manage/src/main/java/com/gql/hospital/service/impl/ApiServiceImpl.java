@@ -240,7 +240,7 @@ public class ApiServiceImpl implements ApiService {
 
             Schedule targetSchedule = scheduleMapper.selectById(id);
             if (null != targetSchedule) {
-                //值copy不为null的值，该方法为自定义方法
+                // 值copy不为null的值，该方法为自定义方法
                 BeanUtils.copyBean(schedule, targetSchedule, Schedule.class);
                 scheduleMapper.updateById(targetSchedule);
             } else {

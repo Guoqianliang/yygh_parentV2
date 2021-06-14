@@ -66,7 +66,7 @@ public final class HttpUtil {
 			String inputLine;
 			StringBuilder bankXmlBuffer = new StringBuilder();
 			while ((inputLine = in.readLine()) != null) {
-			    bankXmlBuffer.append(inputLine);
+				bankXmlBuffer.append(inputLine);
 			}
 			in.close();
 			httpcon.disconnect();
