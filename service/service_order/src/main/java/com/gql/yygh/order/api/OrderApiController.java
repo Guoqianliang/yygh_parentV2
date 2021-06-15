@@ -32,9 +32,10 @@ public class OrderApiController {
 
     @ApiOperation(value = "生成挂号订单")
     @PostMapping("auth/submitOrder/{scheduleId}/{patientId}")
-    public Result savaOrders(@PathVariable String scheduleId,
-                             @PathVariable Long patientId) {
-        Long orderId = orderService.saveOrder(scheduleId,patientId);
+    public Result saveOrder(
+            @PathVariable String scheduleId,
+            @PathVariable Long patientId) {
+        Long orderId = orderService.saveOrder(scheduleId, patientId);
         return Result.ok(orderId);
     }
 
@@ -55,11 +56,16 @@ public class OrderApiController {
         return Result.ok(pageModel);
     }
 
-    //
     @ApiOperation(value = "获取订单状态")
     @GetMapping("auth/getStatusList")
     public Result getStatusList() {
         return Result.ok(OrderStatusEnum.getStatusList());
     }
 
+    //取消预约
+    @GetMapping("auth/cancelOrder/{orderId}")
+    public Result cancelOrder(@PathVariable Long orderId) {
+        Boolean isOrder = orderService.cancelOrder(orderId);
+        return Result.ok(isOrder);
+    }
 }

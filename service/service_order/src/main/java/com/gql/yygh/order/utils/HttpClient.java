@@ -1,10 +1,5 @@
 package com.gql.yygh.order.utils;
 
-/**
- * @Description:
- * @author Guoqianliang
- */
-
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -36,8 +31,12 @@ import java.util.Map;
 
 /**
  * http请求客户端
+ *
+ * @author qy
+ *
  */
 public class HttpClient {
+
     private String url;
     private Map<String, String> param;
     private int statusCode;
@@ -152,8 +151,7 @@ public class HttpClient {
         try {
             if (isHttps) {
                 if (isCert) {
-                    // TODO
-                    FileInputStream inputStream = new FileInputStream(new File(""));
+                    FileInputStream inputStream = new FileInputStream(new File(ConstantPropertiesUtils.CERT));
                     KeyStore keystore = KeyStore.getInstance("PKCS12");
                     char[] partnerId2charArray = certPassword.toCharArray();
                     keystore.load(inputStream, partnerId2charArray);
@@ -211,3 +209,4 @@ public class HttpClient {
         return content;
     }
 }
+

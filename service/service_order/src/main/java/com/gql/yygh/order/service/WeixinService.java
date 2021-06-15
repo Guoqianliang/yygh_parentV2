@@ -7,8 +7,16 @@ import java.util.Map;
  * @author Guoqianliang
  */
 public interface WeixinService {
-    /**
-     * 下单 生成二维码
-     */
+
+    // 生成微信支付二维码
     Map createNative(Long orderId);
+
+    // 调用微信接口实现支付状态查询
+    Map<String, String> queryPayStatus(Long orderId);
+
+    /***
+     * 退款
+     */
+    Boolean refund(Long orderId);
+
 }

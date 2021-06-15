@@ -1,15 +1,29 @@
 package com.gql.yygh.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gql.yygh.enums.PaymentTypeEnum;
 import com.gql.yygh.model.order.OrderInfo;
 import com.gql.yygh.model.order.PaymentInfo;
+
+import java.util.Map;
 
 /**
  * @Description:
  * @author Guoqianliang
  */
 public interface PaymentService extends IService<PaymentInfo> {
+
+    //向支付记录表添加信息
     void savePaymentInfo(OrderInfo order, Integer status);
-    // 2.向支付记录表添加记录
+
+    //更新订单状态
+    void paySuccess(String out_trade_no, Map<String, String> resultMap);
+
+    /**
+     * 获取支付记录
+     * @param orderId
+     * @param paymentType
+     * @return
+     */
+    PaymentInfo getPaymentInfo(Long orderId, Integer paymentType);
+
 }
